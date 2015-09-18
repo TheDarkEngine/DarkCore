@@ -53,6 +53,7 @@ link_directories($ENV{DXSDK_DIR}/Lib/x86)
 link_directories(${CMAKE_SOURCE_DIR}/libs/detours/lib.X86)
 link_directories(${CMAKE_SOURCE_DIR}/libs/openssl-1.0.2c/lib)
 link_directories(${CMAKE_SOURCE_DIR}/libs/libwebsockets/lib)
+link_directories(${CMAKE_SOURCE_DIR}/libs/python35/lib)
 
 # Create main target
 add_library(DarkCore SHARED
@@ -72,7 +73,8 @@ target_include_directories(DarkCore PRIVATE
   $ENV{DXSDK_DIR}/Include
   ${CMAKE_SOURCE_DIR}/libs/detours/include
   ${CMAKE_SOURCE_DIR}/libs/openssl-1.0.2c/include
-  ${CMAKE_SOURCE_DIR}/libs/libwebsockets/include)
+  ${CMAKE_SOURCE_DIR}/libs/libwebsockets/include
+  ${CMAKE_SOURCE_DIR}/libs/python35/include)
 
 # Link lib files
 target_link_libraries(DarkCore
@@ -83,6 +85,7 @@ target_link_libraries(DarkCore
   detours
   libeay32MT
   ZLib
-  libwebsocketswin32)
+  libwebsocketswin32
+  python35)
 
 target_compile_definitions(DarkCore PRIVATE NOMINMAX) # Prevent windows.h from defining min() and max()

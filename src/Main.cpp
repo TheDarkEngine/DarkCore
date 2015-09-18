@@ -12,23 +12,31 @@ BOOL DarkInit(HINSTANCE hModule)
 
 	CreateThread(0, 0, StartWebSocketServer, 0, 0, 0);
 
-	return true;
+	return TRUE;
 }
+
 BOOL DarkExit()
 {
 	Logging::Debug::ExitDebugLogging();
-	return true;
+	return TRUE;
 }
+
 //This temporary hooking that requires an injector.
 //This should be replaced with a better hijack method
-bool WINAPI DllMain(HMODULE hMod, long ulReason, void* pvReserved)
+BOOL WINAPI DllMain(HMODULE hMod, long ulReason, void* pvReserved)
 {
 	switch (ulReason)
 	{
-	case DLL_PROCESS_ATTACH: return DarkInit(hMod);
-	case DLL_PROCESS_DETACH: return DarkExit();
+	case DLL_PROCESS_ATTACH:
+		return DarkInit(hMod);
+	
+	case DLL_PROCESS_DETACH:
+		return DarkExit();
+	
 	case DLL_THREAD_ATTACH:
-	case DLL_THREAD_DETACH: return true;
+	case DLL_THREAD_DETACH:
+		return TRUE;
 	}
-	return false;
+
+	return FALSE;
 }
