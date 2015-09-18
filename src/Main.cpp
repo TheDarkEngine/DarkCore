@@ -1,0 +1,34 @@
+#include <windows.h>
+#include <stdio.h>
+#include <detours.h>
+#include "Logging\Debug.hpp"
+#include "WebSockets\WebSockets.hpp"
+#include "Main.hpp"
+
+BOOL DarkInit(HINSTANCE hModule)
+{
+	DisableThreadLibraryCalls(hModule);
+	Logging::Debug::InitDebugLogging(hModule);
+
+	CreateThread(0, 0, StartWebSocketServer, 0, 0, 0);
+
+	return true;
+}
+BOOL DarkExit()
+{
+	Logging::Debug::ExitDebugLogging();
+	return true;
+}
+//This temporary hooking that requires an injector.
+//This should be replaced with a better hijack method
+bool WINAPI DllMain(HMODULE hMod, long ulReason, void* pvReserved)
+{
+	switch (ulReason)
+	{
+	case DLL_PROCESS_ATTACH: return DarkInit(hMod);
+	case DLL_PROCESS_DETACH: return DarkExit();
+	case DLL_THREAD_ATTACH:
+	case DLL_THREAD_DETACH: return true;
+	}
+	return false;
+}

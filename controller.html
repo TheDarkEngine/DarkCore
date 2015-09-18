@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DarkController</title>
+    <link rel="stylesheet" type="text/css" href="http://255kb.github.io/md-snackbars/dist/md-snackbars.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.4.0/codemirror.min.css">
+    <style>
+    @import url(https://fonts.googleapis.com/css?family=Lato:300&subset=latin,latin-ext);
+    body {
+        padding-top: 50px;
+        font-family: 'Lato', sans-serif;
+    }
+    
+    .navbar-fixed-top {
+        border: 0;
+    }
+    
+    .main {
+        padding: 20px;
+    }
+    
+    @media (min-width: 768px) {
+        .main {
+            padding-right: 40px;
+            padding-left: 40px;
+        }
+    }
+    
+    .main .page-header {
+        margin-top: 0;
+    }
+    
+    .placeholders {
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    
+    .placeholders h4 {
+        margin-bottom: 0;
+    }
+    
+    .placeholder {
+        margin-bottom: 20px;
+    }
+    
+    .placeholder img {
+        display: inline-block;
+        border-radius: 50%;
+    }
+    
+    h1,
+    .h1,
+    h2,
+    .h2,
+    h3,
+    .h3 {
+        margin-top: 0px;
+        margin-bottom: 10px;
+    }
+    
+    .container {
+        padding-top: 20px;
+    }
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">DarkController</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="https://github.com/TheDarkEngine" target="_BLANK">Github</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">DarkController - <span id="connectionStatus">Waiting for init...</span></h3>
+            </div>
+            <div class="panel-body">
+                <textarea id="commandConsole"></textarea>
+                <p align="center">
+                    <form id="CommandForm">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="runCommand" placeholder="Type a command to test...">
+                            <span class="input-group-btn">
+                            <button class="btn btn-default" id="runCommand" type="submit">Run!</button>
+                        </span>
+                        </div>
+                    </form>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.4.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.4.0/mode/javascript/javascript.min.js"></script>
+    <script src="http://255kb.github.io/md-snackbars/dist/md-snackbars.min.js"></script>
+    <script>
+    $(function() {
+        MDSnackbars.init();
+        SnackBarOptions = {
+            text: 'You need to set SnackBarOptions.text before calling show!', // change snackbar's text/html
+            toast: false, // change snackbar's style (true = rounded corners)
+            align: 'right', // align 'left' or 'right'
+            fullWidth: true, // snackbar takes all screen width (overrides align and toast style, also remove default 2px rounded corners)
+            timeout: 3000, // delay before the snackbar disappears (if 0, the snackbar is permanent unless another snackbar is triggered or MDSnackbars.hide() is called)
+            html: true, // allows HTML insertion
+            clickToClose: true // enable/disable click to close behavior
+        };
+        var played = false;
+        DisplayNotification = function(string, override) {
+            if (typeof override !== "undefined") {
+                played = false;
+            }
+            SnackBarOptions.text = string;
+            $("#connectionStatus").text(string);
+            MDSnackbars.show(SnackBarOptions);
+            if (!played) {
+                $('#notification')[0].currentTime = 0;
+                $('#notification')[0].volume = 0.1;
+                $('#notification')[0].play();
+                played = true;
+            }
+        }
+        var myCodeMirror;
+
+        myCodeMirror = CodeMirror.fromTextArea(commandConsole);
+
+        //TODO: Support up arrow, enter, etc
+        $("#CommandForm").submit(function(e) {
+            e.preventDefault();
+            if (jQuery("#runCommand").val().length > 0) {
+                DarkCore.send(jQuery("#runCommand").val(), function(res) {
+                    myCodeMirror.replaceRange(res + "\n", CodeMirror.Pos(myCodeMirror.lastLine()));
+                });
+            }
+            jQuery("#runCommand").val("");
+        });
+
+
+        DarkCore = "";
+        DarkCoreConnected = false;
+        snacking = 0;
+
+        DarkControllerInit = function() {
+            DarkCore = new DarkCoreHelper();
+            DarkCore.DarkSocket.onopen = function() {
+                DisplayNotification("Connected to DarkCore!");
+                DarkCoreConnected = true;
+            };
+            DarkCore.DarkSocket.onerror = function() {
+                DarkCoreConnected = false;
+                if (!DarkCoreConnected) {
+                    if (DarkCorePortIndex == 0) {
+                        DarkCorePortIndex = 1;
+                        snacking = 1;
+                        DarkControllerInit();
+                    } else {
+                        DarkCorePortIndex = 0;
+                        snacking = 0;
+                        setTimeout(DarkControllerInit, 1000);
+                    }
+                    if (!snacking) {
+                        DisplayNotification("Not connected to DarkCore!");
+                        snacking = 1;
+                        setTimeout(function() {
+                            snacking = 0;
+                        }, 9000);
+                    }
+                }
+                console.error("WebSocket could not be established, check game is running");
+            };
+            DarkCore.DarkSocket.onmessage = function(message) {
+                DarkCore._cbFunction(message.data);
+                DarkCore.lastMessage = message.data;
+            };
+        }
+        var DarkCorePortIndex = 0;
+        var DarkCorePorts = [13337, 13338];
+        DarkCoreHelper = function() {
+            window.WebSocket = window.WebSocket || window.MozWebSocket;
+            this.DarkSocket = new WebSocket('ws://127.0.0.1:' + DarkCorePorts[DarkCorePortIndex], 'darkpacket');
+            this.lastMessage = "";
+            this.lastCommand = "";
+            this.open = false;
+            this._cbFunction = {};
+            this.send = function(command, cb) {
+                try {
+                    this._cbFunction = cb;
+                    this.DarkSocket.send(command);
+                    this.lastCommand = command;
+                } catch (e) {
+                    DisplayNotification("Unable to communicate with DarkCore, is it running?", true);
+                }
+            }
+        }
+        DarkControllerInit();
+    });
+    </script>
+    <audio id="notification" src="http://dewmenu.halo.click/sounds/odst_a_button.mp3" type="audio/mp3"></audio>
+</body>
+
+</html>
