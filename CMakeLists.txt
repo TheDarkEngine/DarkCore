@@ -59,10 +59,13 @@ link_directories(${CMAKE_SOURCE_DIR}/libs/python35/lib)
 add_library(DarkCore SHARED
     src/Logging/Debug.cpp
     src/Logging/Debug.hpp
+    src/Python/Python.cpp
+    src/Python/Python.hpp
     src/WebSockets/WebSockets.cpp
     src/WebSockets/WebSockets.hpp
     src/Main.cpp
     src/Main.hpp
+    src/Platform.hpp
     src/resource.h
     src/DarkCore.rc)
 

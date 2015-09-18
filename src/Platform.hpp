@@ -10,3 +10,9 @@
 #	pragma warning (disable : 4996)
 
 #endif /* _MSC_VER */
+
+//
+// Standard Library Headers
+//
+
+#include <string>
