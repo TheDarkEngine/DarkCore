@@ -3,6 +3,13 @@
 
 #include "../Platform.hpp"
 
-DWORD WINAPI StartWebSocketServer(LPVOID);
+namespace WebSockets
+{
+	class Server
+	{
+	public:
+		static DWORD WINAPI Start(LPVOID);
+	};
+}
 
 #endif /* DARKCORE_WEBSOCKETS_WEBSOCKETS_HPP */

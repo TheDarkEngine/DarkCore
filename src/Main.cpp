@@ -10,7 +10,7 @@ BOOL DarkInit(HINSTANCE hModule)
 	DisableThreadLibraryCalls(hModule);
 	Logging::Debug::InitDebugLogging(hModule);
 
-	CreateThread(0, 0, StartWebSocketServer, 0, 0, 0);
+	CreateThread(0, 0, WebSockets::Server::Start, 0, 0, 0);
 
 	return TRUE;
 }
