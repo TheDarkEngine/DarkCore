@@ -67,7 +67,7 @@ DWORD WINAPI StartWebSocketServer(LPVOID) {
 	char interface_name[128] = "";
 	const char * interfacez = NULL;
 
-	Logging::Debug::WriteToLog("StartWebSocketServer: Initializing WebSocket Server on Port 13337");
+	Logging::Debug::WriteToLog("StartWebSocketServer: Initializing WebSocket Server on Port %i", port);
 
 	//TODO: implement https/ssl later
 	const char *cert_path = "/libwebsockets-test-server.pem";
