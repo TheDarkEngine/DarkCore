@@ -37,11 +37,6 @@ set(CMAKE_USER_MAKE_RULES_OVERRIDE
 set(CMAKE_USER_MAKE_RULES_OVERRIDE_CXX
    ${CMAKE_CURRENT_SOURCE_DIR}/cxx_flag_overrides.cmake)
 
-if(MSVC)
-  set(CMAKE_EXE_LINKER_FLAGS
-      "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmtd.lib")
-endif()
-
 # Project name is DarkCore
 project(DarkCore)
 
