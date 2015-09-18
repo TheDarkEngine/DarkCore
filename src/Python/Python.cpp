@@ -2,6 +2,8 @@
 #include "../Logging/Debug.hpp"
 #include "Python.hpp"
 
+wchar_t *Python::Program;
+
 bool Python::Initialize(std::string programName)
 {
 	const char *programNameStr;
