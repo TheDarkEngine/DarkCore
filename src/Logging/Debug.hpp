@@ -1,5 +1,8 @@
-#ifndef DEBUG_HPP
-#define DEBUG_HPP
+#ifndef DARKCORE_LOGGING_DEBUG_HPP
+#define DARKCORE_LOGGING_DEBUG_HPP
+
+#include "../Platform.hpp"
+
 namespace Logging
 {
 	class Debug
@@ -13,4 +16,5 @@ namespace Logging
 		static char *GetDirectoryFile(char* filename);
 	};
 }
-#endif /* DEBUG_HPP */
+
+#endif /* DARKCORE_LOGGING_DEBUG_HPP */
