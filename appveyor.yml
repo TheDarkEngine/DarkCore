@@ -1,0 +1,43 @@
+version: 0.0.0.{build}
+
+# Operating system (build VM template)
+os: Windows Server 2012 R2
+
+# scripts that are called at very beginning, before repo cloning
+init:
+  - git config --global core.autocrlf input
+
+# clone directory
+clone_folder: c:\Projects\DarkCore
+
+platform: x86
+configuration: Release
+
+install:
+  - cmd: cinst cmake -version 3.2.3 -y
+  - cmd: cmake --version
+  # by default, all script lines are interpreted as batch
+
+build:
+  project: c:\Projects\DarkCore\build\DarkCore.vcxproj      # path to Visual Studio solution or project
+
+# scripts to run before build
+before_build:
+  - echo Running DARKCORE_VS2013_SLN.bat...
+  - cd c:\Projects\DarkCore
+  - DARKCORE_VS2013_SLN.bat
+
+# scripts to run after build
+after_build:
+  - cd C:\Projects\DarkCore
+  # - xcopy C:\Projects\DarkCore\libs\libwebsockets\bin C:\Projects\DarkCore\build\Release /S /Y
+  - cd C:\Projects\DarkCore\build\Release\
+  - del DarkCore.exp
+  - del DarkCore.lib
+  - 7z a c:\Projects\DarkCore\DarkCore-Installer.7z * -t7z m0=lzma -mx=9 -mfb=64 -md=32m -ms=on
+  - copy /b "C:\Projects\DarkCore\7zsd.sfx" + "C:\Projects\DarkCore\7z_DarkCore_Config.txt" + "c:\Projects\DarkCore\DarkCore-Installer.7z" "c:\Projects\DarkCore\DarkCore-Installer.exe"
+  - cd c:\Projects\DarkCore
+
+artifacts:
+  - path: DarkCore-Installer.exe
+    name: DarkCore-Installer.exe
