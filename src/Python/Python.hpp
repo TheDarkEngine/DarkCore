@@ -1,16 +1,28 @@
 #ifndef DARKCORE_PYTHON_PYTHON_HPP
 #define DARKCORE_PYTHON_PYTHON_HPP
 
-#include "../Platform.hpp"
+#include <Python.h>
+#include "../Main.hpp"
 
-class Python
+namespace Python
 {
-public:
-	static bool Initialize(std::string programName);
-	static void Finalize();
+	DarkCoreAPI wchar_t *Program;
+	DarkCoreAPI PyMethodDef Methods[];
+	DarkCoreAPI PyModuleDef Module;
 
-private:
-	static wchar_t *Program;
-};
+	//
+	// Toplevel functions:
+	//
+
+	DarkCoreAPI bool Initialize(std::string programName);
+	DarkCoreAPI PyObject *CreateModule();
+	DarkCoreAPI void Finalize();
+
+	//
+	// Functions in the 'darkcore' module:
+	//
+
+	DarkCoreAPI PyObject *DebugLog(PyObject *self, PyObject *args);
+}
 
 #endif /* DARKCORE_PYTHON_PYTHON_HPP */
