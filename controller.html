@@ -205,10 +205,14 @@
             this.lastCommand = "";
             this.open = false;
             this._cbFunction = {};
+
             this.send = function(command, cb) {
+                var jsonSender = {
+                    "command": command
+                };
                 try {
                     this._cbFunction = cb;
-                    this.DarkSocket.send(command);
+                    this.DarkSocket.send(JSON.stringify(jsonSender));
                     this.lastCommand = command;
                 } catch (e) {
                     DisplayNotification("Unable to communicate with DarkCore, is it running?", true);

@@ -5,6 +5,9 @@
 #include "websock-w32.h"
 #include "gettimeofday.h"
 #include "WebSockets.hpp"
+#include "../ThirdParty/rapidjson/document.h"
+#include "../ThirdParty/rapidjson/writer.h"
+#include "../ThirdParty/rapidjson/stringbuffer.h"
 #include "../Logging/Debug.hpp"
 namespace WebSockets
 {
@@ -21,9 +24,12 @@ namespace WebSockets
 			break;
 		}
 		case LWS_CALLBACK_RECEIVE: {
-			//TODO: JSON responses
 			//TODO: Call functions in C from the command asked by the user.
-			std::string send = "I got your message. You sent me " + std::string((char *)in);
+			rapidjson::Document d;
+			d.Parse(std::string((char *)in).c_str());
+
+			rapidjson::Value& command = d["command"];
+			std::string send = "I got your message. You sent me " + std::string(command.GetString());
 
 			Logging::Debug::WriteToLog("Websocket Event (LWS_CALLBACK_RECEIVE): %s", std::string((char *)in).c_str());
 
