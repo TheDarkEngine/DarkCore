@@ -67,7 +67,14 @@ namespace WebSockets
 		}
 	};
 
+	bool ServerRunning = FALSE;
+	void Server::Stop()
+	{
+		ServerRunning = FALSE;
+		return;
+	}
 	DWORD WINAPI Server::Start(LPVOID) {
+		ServerRunning = TRUE;
 		int port = 13337;
 		struct libwebsocket_context *context;
 		int opts = 0;
@@ -94,16 +101,16 @@ namespace WebSockets
 
 
 		// infinite loop, to end this server send SIGTERM. (CTRL+C)
-		while (1) {
+		while (ServerRunning) {
 			libwebsocket_service(context, 50);
 			// libwebsocket_service will process all waiting events with their
 			// callback functions and then wait 50 ms.
 			// (this is a single threaded webserver and this will keep our server
 			// from generating load while there are not requests to process)
 		}
+		Logging::Debug::WriteToLog("StartWebSocketServer: libwebsocket cleaned up");
 
 		libwebsocket_context_destroy(context);
-		Logging::Debug::WriteToLog("StartWebSocketServer: libwebsocket cleaned up");
 		return 0;
 	}
 }

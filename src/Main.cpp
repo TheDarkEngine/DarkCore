@@ -28,15 +28,27 @@ BOOL DarkInit(HINSTANCE hModule)
 	return TRUE;
 }
 
+//
+// DarkExit should contain any cleanup necessary to safely unload DarkCore 
+//
 BOOL DarkExit()
 {
+	// Cleanup Plugins
 	Python::Finalize();
+
+	// Cleanup Web API
+	WebSockets::Server::Stop();
+
+	// Stop Logging
 	Logging::Debug::ExitDebugLogging();
+
 	return TRUE;
 }
 
-//This temporary hooking that requires an injector.
-//This should be replaced with a better hijack method
+//
+// This temporary hooking that requires an injector.
+// This should be replaced with a better hijack method
+//
 BOOL WINAPI DllMain(HMODULE hMod, long ulReason, void* pvReserved)
 {
 	switch (ulReason)

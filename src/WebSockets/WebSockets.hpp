@@ -9,6 +9,7 @@ namespace WebSockets
 	{
 	public:
 		static DWORD WINAPI Start(LPVOID);
+		static void Server::Stop();
 	};
 }
 
