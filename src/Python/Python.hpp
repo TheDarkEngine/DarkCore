@@ -1,30 +1,22 @@
 #ifndef DARKCORE_PYTHON_PYTHON_HPP
 #define DARKCORE_PYTHON_PYTHON_HPP
 
-#include <Python.h>
-#include "../Main.hpp"
+#ifdef _MSC_VER
+#	pragma once
+#endif	/* _MSC_VER */
 
 namespace Python
 {
-	DarkCoreAPI wchar_t *Program;
-	DarkCoreAPI PyMethodDef Methods[];
-	DarkCoreAPI PyModuleDef Module;
-
-	class Object
-	{
-	public:
-		Object();
-
-	private:
-		PyObject *Value;
-	};
+	extern DarkCoreAPI wchar_t *Program;
+	extern DarkCoreAPI PyModuleDef Module;
+	extern DarkCoreAPI PyMethodDef Methods[];
 
 	//
 	// Toplevel functions:
 	//
 
 	DarkCoreAPI bool Initialize(std::string programName);
-	DarkCoreAPI PyObject *CreateModule();
+	DarkCoreAPI PyObject *InitializeModule();
 	DarkCoreAPI void Finalize();
 
 	//
@@ -32,6 +24,7 @@ namespace Python
 	//
 
 	DarkCoreAPI PyObject *DebugLog(PyObject *self, PyObject *args);
+	DarkCoreAPI PyObject *HookEvent(PyObject *self, PyObject *args);
 }
 
 #endif /* DARKCORE_PYTHON_PYTHON_HPP */

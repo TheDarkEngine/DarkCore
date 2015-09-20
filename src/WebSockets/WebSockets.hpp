@@ -1,7 +1,9 @@
 #ifndef DARKCORE_WEBSOCKETS_WEBSOCKETS_HPP
 #define DARKCORE_WEBSOCKETS_WEBSOCKETS_HPP
 
-#include "../Platform.hpp"
+#ifdef _MSC_VER
+#	pragma once
+#endif	/* _MSC_VER */
 
 namespace WebSockets
 {

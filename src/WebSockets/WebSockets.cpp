@@ -1,14 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <libwebsockets.h>
-#include "websock-w32.h"
-#include "gettimeofday.h"
-#include "WebSockets.hpp"
-#include "../ThirdParty/rapidjson/document.h"
-#include "../ThirdParty/rapidjson/writer.h"
-#include "../ThirdParty/rapidjson/stringbuffer.h"
-#include "../Logging/Debug.hpp"
+#include <DarkCore.hpp>
+
 namespace WebSockets
 {
 	static int callback_http(struct libwebsocket_context *context, struct libwebsocket *wsi, enum libwebsocket_callback_reasons reason, void *user, void *in, size_t len)

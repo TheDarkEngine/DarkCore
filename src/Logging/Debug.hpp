@@ -1,7 +1,9 @@
 #ifndef DARKCORE_LOGGING_DEBUG_HPP
 #define DARKCORE_LOGGING_DEBUG_HPP
 
-#include "../Platform.hpp"
+#ifdef _MSC_VER
+#	pragma once
+#endif	/* _MSC_VER */
 
 namespace Logging
 {

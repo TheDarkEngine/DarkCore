@@ -1,11 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
-
-#include <Windows.h>
-#include <stdio.h>
-#include <iostream>
-#include <fstream>
-#include <time.h>
-#include "Debug.hpp"
+#include <DarkCore.hpp>
 
 #define LOGNAME "DarkCore-Debug.log"
 
