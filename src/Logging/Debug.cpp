@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
+#include <time.h>
 #include "Debug.hpp"
 
 #define LOGNAME "DarkCore-Debug.log"
@@ -13,6 +14,18 @@ namespace Logging
 	std::ofstream ofile;
 	char dlldir[320];
 
+	//TODO: move into a helper class somewhere so we can use this elsewhere
+	const std::string currentDateTime() {
+		time_t     now = time(0);
+		struct tm  tstruct;
+		char       buf[80];
+		tstruct = *localtime(&now);
+		// Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
+		// for more information about date/time format
+		strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+
+		return buf;
+	}
 	char *Debug::GetDirectoryFile(char* filename)
 	{
 		static char path[320];
@@ -34,7 +47,7 @@ namespace Logging
 			_vsnprintf(logbuf + strlen(logbuf), sizeof(logbuf) - strlen(logbuf), fmt, va_alist);
 			va_end(va_alist);
 
-			ofile << logbuf << std::endl;
+			ofile << currentDateTime() + ": " +logbuf << std::endl;
 		}
 	}
 
