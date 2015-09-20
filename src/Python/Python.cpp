@@ -27,9 +27,7 @@ bool Python::Initialize(std::string programName)
 	PyImport_AppendInittab("darkcore", &Python::CreateModule);
 	Py_Initialize();
 
-	PyRun_SimpleString(
-		"import darkcore\n"
-		"darkcore.debug_log('What is up???')\n");
+	Logging::Debug::WriteToLog("DarkCore Python API Initialized");
 
 	return true;
 }
@@ -43,6 +41,8 @@ void Python::Finalize()
 {
 	Py_Finalize();
 	PyMem_RawFree(Python::Program);
+
+	Logging::Debug::WriteToLog("DarkCore Python API Finalized");
 }
 
 PyObject *Python::DebugLog(PyObject *self, PyObject *args)

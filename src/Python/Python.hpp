@@ -10,6 +10,15 @@ namespace Python
 	DarkCoreAPI PyMethodDef Methods[];
 	DarkCoreAPI PyModuleDef Module;
 
+	class Object
+	{
+	public:
+		Object();
+
+	private:
+		PyObject *Value;
+	};
+
 	//
 	// Toplevel functions:
 	//
