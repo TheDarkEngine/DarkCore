@@ -7,24 +7,10 @@
 
 namespace Python
 {
-	extern DarkCoreAPI wchar_t *Program;
-	extern DarkCoreAPI PyModuleDef Module;
-	extern DarkCoreAPI PyMethodDef Methods[];
-
-	//
-	// Toplevel functions:
-	//
-
 	DarkCoreAPI bool Initialize(std::string programName);
-	DarkCoreAPI PyObject *InitializeModule();
+	DarkCoreAPI bool AddToSearchPath(std::string directory);
+	DarkCoreAPI PyObject *LoadModule(std::string moduleName);
 	DarkCoreAPI void Finalize();
-
-	//
-	// Functions in the 'darkcore' module:
-	//
-
-	DarkCoreAPI PyObject *DebugLog(PyObject *self, PyObject *args);
-	DarkCoreAPI PyObject *HookEvent(PyObject *self, PyObject *args);
 }
 
 #endif /* DARKCORE_PYTHON_PYTHON_HPP */
