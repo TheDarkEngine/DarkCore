@@ -59,6 +59,8 @@ link_directories(${CMAKE_SOURCE_DIR}/libs/python35/lib)
 add_library(DarkCore SHARED
     src/Logging/Debug.cpp
     src/Logging/Debug.hpp
+    src/Memory/Memory.cpp
+    src/Memory/Memory.hpp
     src/Python/Python.cpp
     src/Python/Python.hpp
     src/WebSockets/WebSockets.cpp
