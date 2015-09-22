@@ -22,6 +22,8 @@ namespace WebSockets
 			rapidjson::Value& command = d["command"];
 			std::string send = "I got your message. You sent me " + std::string(command.GetString());
 
+			//Memory::FindSignature(NULL, NULL, Pattern, Mask);
+
 			Logging::Debug::WriteToLog("Websocket Event (LWS_CALLBACK_RECEIVE): %s", std::string((char *)in).c_str());
 
 			unsigned char *sendChar = (unsigned char*)malloc(LWS_SEND_BUFFER_PRE_PADDING + send.length() + LWS_SEND_BUFFER_POST_PADDING);

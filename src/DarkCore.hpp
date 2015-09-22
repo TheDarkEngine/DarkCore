@@ -33,6 +33,7 @@
 //
 // Common Headers
 //
+#include <Psapi.h>
 
 // Standard Library Headers
 #include <fstream>
@@ -59,6 +60,7 @@
 #include <Logging/Debug.hpp>
 #include <Python/Python.hpp>
 #include <WebSockets/WebSockets.hpp>
+#include <Memory/Memory.hpp>
 
 namespace DarkCore
 {
