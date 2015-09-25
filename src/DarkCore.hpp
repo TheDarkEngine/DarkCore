@@ -50,9 +50,9 @@
 #include <gettimeofday.h>
 
 // RapidJSON Headers
-#include <ThirdParty\rapidjson\document.h>
-#include <ThirdParty\rapidjson\writer.h>
-#include <ThirdParty\rapidjson\stringbuffer.h>
+#include <rapidjson\document.h>
+#include <rapidjson\writer.h>
+#include <rapidjson\stringbuffer.h>
 
 // Python Headers
 #include <Python.h>
@@ -62,10 +62,10 @@
 #include <Core\Container.hpp>
 #include <Logging\LogComponent.hpp>
 #include <Python\PythonComponent.hpp>
+#include <WebSockets\ServerComponent.hpp>
 
 // DarkCore Headers to-bo-transitioned
 #include <Logging/Debug.hpp>
-#include <WebSockets/WebSockets.hpp>
 #include <Memory/Memory.hpp>
 
 #endif /* DARKCORE_HPP */

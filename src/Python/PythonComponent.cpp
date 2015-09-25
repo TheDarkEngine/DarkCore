@@ -41,8 +41,7 @@ namespace DarkCore
 
 		if (!(this->WideApplicationPath = Py_DecodeLocale((programNameStr = this->ApplicationPath.c_str()), 0)))
 		{
-			if (log)
-				*log << "FATAL: Cannot decode program: " << programNameStr;
+			*log << "FATAL: Cannot decode program: " << programNameStr;
 
 			return false;
 		}
@@ -65,10 +64,7 @@ namespace DarkCore
 
 		AddToSearchPath(programDirectory.append("\\plugins\\"));
 
-		LoadModule("halo_online");
-
-		if (log)
-			*log << "DarkCore Python Component Initialized";
+		*log << "DarkCore Python Component Initialized";
 
 		PythonComponent::Instance = this;
 
@@ -82,10 +78,9 @@ namespace DarkCore
 
 		this->Initialized = false;
 
-		LogComponent *log = this->GetSibling<LogComponent>();
+		auto log = this->GetSibling<LogComponent>();
 
-		if (log)
-			*log << "DarkCore Python Component Finalized";
+		*log << "DarkCore Python Component Finalized";
 	}
 
 	void PythonComponent::AddToSearchPath(const std::string &directoryPath)
@@ -112,8 +107,7 @@ namespace DarkCore
 		if (PythonComponent::Instance != NULL)
 			log = PythonComponent::Instance->GetSibling<LogComponent>();
 
-		if (log)
-			*log << msg;
+		*log << msg;
 
 		return Py_None;
 	}

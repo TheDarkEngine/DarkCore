@@ -17,7 +17,8 @@ BOOL WINAPI DllMain(HMODULE hMod, long ulReason, void* pvReserved)
 
 			Core = new DarkCore::Container({
 				new DarkCore::LogComponent(programDirectory.append("\\DarkCore-Debug.log")),
-				new DarkCore::PythonComponent(applicationPath)
+				new DarkCore::PythonComponent(applicationPath),
+				new DarkCore::ServerComponent()
 			});
 
 			//

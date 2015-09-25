@@ -69,8 +69,8 @@ add_library(DarkCore SHARED
     src/Memory/Memory.hpp
     src/Python/PythonComponent.cpp
     src/Python/PythonComponent.hpp
-    src/WebSockets/WebSockets.cpp
-    src/WebSockets/WebSockets.hpp
+    src/WebSockets/ServerComponent.cpp
+    src/WebSockets/ServerComponent.hpp
     src/DarkCore.hpp
     src/DarkCore.rc
     src/Main.cpp
@@ -85,6 +85,7 @@ target_include_directories(DarkCore PRIVATE
   ${CMAKE_SOURCE_DIR}/libs/openssl-1.0.2c/include
   ${CMAKE_SOURCE_DIR}/libs/libwebsockets/include
   ${CMAKE_SOURCE_DIR}/libs/python35/include
+  ${CMAKE_SOURCE_DIR}/libs/rapidjson/include
   ${CMAKE_SOURCE_DIR}/src)
 
 # Link lib files

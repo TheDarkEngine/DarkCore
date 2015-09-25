@@ -26,8 +26,8 @@ namespace DarkCore
 
 	void Container::Finalize()
 	{
-		for (auto i : this->Components)
-			if (i)
-				i->Finalize();
+		for (auto i = this->Components.rbegin(); i != this->Components.rend(); i++)
+			if (*i)
+				(*i)->Finalize();
 	}
 }
