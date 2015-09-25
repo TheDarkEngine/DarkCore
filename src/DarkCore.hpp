@@ -39,6 +39,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <vector>
 
 // Detours Headers
 #include <detours.h>
@@ -57,17 +58,14 @@
 #include <Python.h>
 
 // DarkCore Headers
+#include <Core\Component.hpp>
+#include <Core\Container.hpp>
+#include <Logging\LogComponent.hpp>
+#include <Python\PythonComponent.hpp>
+
+// DarkCore Headers to-bo-transitioned
 #include <Logging/Debug.hpp>
-#include <Python/Python.hpp>
 #include <WebSockets/WebSockets.hpp>
 #include <Memory/Memory.hpp>
-
-namespace DarkCore
-{
-	extern DarkCoreAPI HMODULE Module;
-
-	DarkCoreAPI bool Initialize(HMODULE module);
-	DarkCoreAPI bool Finalize();
-}
 
 #endif /* DARKCORE_HPP */
