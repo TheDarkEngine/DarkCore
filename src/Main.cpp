@@ -16,7 +16,11 @@ BOOL WINAPI DllMain(HMODULE hMod, long ulReason, void* pvReserved)
 			auto programDirectory = lastSlashIndex != std::string::npos ? applicationPath.substr(0, lastSlashIndex) : "";
 
 			Core = new DarkCore::Container({
+#ifdef _DEBUG
 				new DarkCore::LogComponent(programDirectory.append("\\DarkCore-Debug.log")),
+#else
+				new DarkCore::LogComponent(programDirectory.append("\\DarkCore.log")),
+#endif
 				new DarkCore::PythonComponent(applicationPath),
 				new DarkCore::ServerComponent()
 			});

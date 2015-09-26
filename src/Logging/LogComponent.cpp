@@ -7,8 +7,8 @@ namespace DarkCore
 		return logComponent.LogStream << message << std::endl;
 	}
 
-	LogComponent::LogComponent(const std::string &logPath, Container *parent)
-		: Component("LogComponent", parent), LogPath(logPath), LogStream(std::ofstream()) {}
+	LogComponent::LogComponent(const std::string &logPath, const std::string &name, Container *parent)
+		: Component(name, parent), LogPath(logPath), LogStream(std::ofstream()) {}
 
 	bool LogComponent::Initialize()
 	{

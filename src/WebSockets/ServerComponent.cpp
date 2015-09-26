@@ -113,8 +113,8 @@ namespace DarkCore
 		return 0;
 	}
 
-	ServerComponent::ServerComponent(Container *parent)
-		: Component("ServerComponent", parent) {}
+	ServerComponent::ServerComponent(const std::string &name, Container *parent)
+		: Component(name, parent) {}
 
 	bool ServerComponent::Initialize()
 	{
@@ -137,6 +137,5 @@ namespace DarkCore
 
 		if (log)
 			*log << "DarkCore Server Component Finalized";
-
 	}
 }

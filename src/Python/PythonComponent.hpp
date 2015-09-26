@@ -10,7 +10,7 @@ namespace DarkCore
 	class PythonComponent : public Component
 	{
 	public:
-		DarkCoreAPI PythonComponent(const std::string &applicationPath, Container *parent = NULL);
+		DarkCoreAPI PythonComponent(const std::string &applicationPath, const std::string &name = "PythonComponent", Container *parent = NULL);
 
 		DarkCoreAPI bool Initialize();
 		DarkCoreAPI void Finalize();

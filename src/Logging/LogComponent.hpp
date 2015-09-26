@@ -6,7 +6,7 @@ namespace DarkCore
 	class LogComponent : public Component
 	{
 	public:
-		DarkCoreAPI LogComponent(const std::string &logPath = "DarkCore-Debug.log", Container *parent = NULL);
+		DarkCoreAPI LogComponent(const std::string &logPath, const std::string &name = "LogComponent", Container *parent = NULL);
 
 		DarkCoreAPI bool Initialize();
 		DarkCoreAPI void Finalize();

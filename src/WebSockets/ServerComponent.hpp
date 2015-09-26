@@ -10,7 +10,7 @@ namespace DarkCore
 	class ServerComponent : public Component
 	{
 	public:
-		DarkCoreAPI ServerComponent(Container *parent = NULL);
+		DarkCoreAPI ServerComponent(const std::string &name = "ServerComponent", Container *parent = NULL);
 
 		DarkCoreAPI bool Initialize();
 		DarkCoreAPI void Finalize();

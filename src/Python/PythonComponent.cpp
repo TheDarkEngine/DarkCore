@@ -23,8 +23,8 @@ namespace DarkCore
 		return PyModule_Create(&Module);
 	}
 
-	PythonComponent::PythonComponent(const std::string &applicationPath, Container *parent)
-		: Component("PythonComponent", parent), ApplicationPath(applicationPath) {}
+	PythonComponent::PythonComponent(const std::string &applicationPath, const std::string &name, Container *parent)
+		: Component(name, parent), ApplicationPath(applicationPath) {}
 
 	bool PythonComponent::Initialize()
 	{
