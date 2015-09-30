@@ -29,23 +29,25 @@ namespace Memory
 		PBYTE Address = NULL;
 		PBYTE Buffer = (PBYTE)BaseAddress;
 
-		if (GetModuleInfo(ImageSize, Buffer))
+		if (BaseAddress == NULL)
 		{
+			if (!GetModuleInfo(ImageSize, Buffer))
+				return Address;
+		}
 
-			DWORD Length = strlen(Mask);
+		DWORD Length = strlen(Mask);
 
-			for (DWORD i = 0; i < (ImageSize - Length); i++)
+		for (DWORD i = 0; i < (ImageSize - Length); i++)
+		{
+			int result = CompareByteArray((Buffer + i), Signature, Mask, Length);
+			if (result < 0)
 			{
-				int result = CompareByteArray((Buffer + i), Signature, Mask, Length);
-				if (result < 0)
-				{
-					Address = (PBYTE)BaseAddress + i;
-					break;
-				}
-				else
-				{
-					i += result;
-				}
+				Address = (PBYTE)BaseAddress + i;
+				break;
+			}
+			else
+			{
+				i += result;
 			}
 		}
 

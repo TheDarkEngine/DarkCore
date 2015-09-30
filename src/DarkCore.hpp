@@ -60,6 +60,7 @@
 #include <Logging/Debug.hpp>
 #include <Python/Python.hpp>
 #include <WebSockets/WebSockets.hpp>
+#include <Memory/D3D9.hpp>
 #include <Memory/Memory.hpp>
 
 namespace DarkCore
