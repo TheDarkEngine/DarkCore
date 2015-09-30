@@ -49,7 +49,7 @@
 #include <websock-w32.h>
 #include <gettimeofday.h>
 
-// RapidJSON Headers
+// RapidJSON Headers	
 #include <rapidjson\document.h>
 #include <rapidjson\writer.h>
 #include <rapidjson\stringbuffer.h>
@@ -66,12 +66,7 @@
 
 // DarkCore Headers to-bo-transitioned
 #include <Logging/Debug.hpp>
-<<<<<<< HEAD
-#include <Python/Python.hpp>
-#include <WebSockets/WebSockets.hpp>
 #include <Memory/D3D9.hpp>
-=======
->>>>>>> e7aeb1c7361322dcff538beb577f44b506866ed9
 #include <Memory/Memory.hpp>
 
 #endif /* DARKCORE_HPP */

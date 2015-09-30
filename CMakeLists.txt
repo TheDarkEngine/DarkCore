@@ -57,19 +57,16 @@ link_directories(${CMAKE_SOURCE_DIR}/libs/python35/lib)
 
 # Create main target
 add_library(DarkCore SHARED
-	src/Core/Component.cpp
-	src/Core/Component.hpp
-	src/Core/Container.cpp
-	src/Core/Container.hpp
+    src/Core/Component.cpp
+    src/Core/Component.hpp
+    src/Core/Container.cpp
+    src/Core/Container.hpp
     src/Logging/Debug.cpp
     src/Logging/Debug.hpp
-<<<<<<< HEAD
     src/Memory/D3D9.cpp
     src/Memory/D3D9.hpp
-=======
     src/Logging/LogComponent.cpp
     src/Logging/LogComponent.hpp
->>>>>>> e7aeb1c7361322dcff538beb577f44b506866ed9
     src/Memory/Memory.cpp
     src/Memory/Memory.hpp
     src/Python/PythonComponent.cpp
