@@ -39,6 +39,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <vector>
 
 // Detours Headers
 #include <detours.h>
@@ -49,26 +50,28 @@
 #include <gettimeofday.h>
 
 // RapidJSON Headers
-#include <ThirdParty\rapidjson\document.h>
-#include <ThirdParty\rapidjson\writer.h>
-#include <ThirdParty\rapidjson\stringbuffer.h>
+#include <rapidjson\document.h>
+#include <rapidjson\writer.h>
+#include <rapidjson\stringbuffer.h>
 
 // Python Headers
 #include <Python.h>
 
 // DarkCore Headers
+#include <Core\Component.hpp>
+#include <Core\Container.hpp>
+#include <Logging\LogComponent.hpp>
+#include <Python\PythonComponent.hpp>
+#include <WebSockets\ServerComponent.hpp>
+
+// DarkCore Headers to-bo-transitioned
 #include <Logging/Debug.hpp>
+<<<<<<< HEAD
 #include <Python/Python.hpp>
 #include <WebSockets/WebSockets.hpp>
 #include <Memory/D3D9.hpp>
+=======
+>>>>>>> e7aeb1c7361322dcff538beb577f44b506866ed9
 #include <Memory/Memory.hpp>
-
-namespace DarkCore
-{
-	extern DarkCoreAPI HMODULE Module;
-
-	DarkCoreAPI bool Initialize(HMODULE module);
-	DarkCoreAPI bool Finalize();
-}
 
 #endif /* DARKCORE_HPP */

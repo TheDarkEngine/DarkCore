@@ -57,16 +57,25 @@ link_directories(${CMAKE_SOURCE_DIR}/libs/python35/lib)
 
 # Create main target
 add_library(DarkCore SHARED
+	src/Core/Component.cpp
+	src/Core/Component.hpp
+	src/Core/Container.cpp
+	src/Core/Container.hpp
     src/Logging/Debug.cpp
     src/Logging/Debug.hpp
+<<<<<<< HEAD
     src/Memory/D3D9.cpp
     src/Memory/D3D9.hpp
+=======
+    src/Logging/LogComponent.cpp
+    src/Logging/LogComponent.hpp
+>>>>>>> e7aeb1c7361322dcff538beb577f44b506866ed9
     src/Memory/Memory.cpp
     src/Memory/Memory.hpp
-    src/Python/Python.cpp
-    src/Python/Python.hpp
-    src/WebSockets/WebSockets.cpp
-    src/WebSockets/WebSockets.hpp
+    src/Python/PythonComponent.cpp
+    src/Python/PythonComponent.hpp
+    src/WebSockets/ServerComponent.cpp
+    src/WebSockets/ServerComponent.hpp
     src/DarkCore.hpp
     src/DarkCore.rc
     src/Main.cpp
@@ -81,6 +90,7 @@ target_include_directories(DarkCore PRIVATE
   ${CMAKE_SOURCE_DIR}/libs/openssl-1.0.2c/include
   ${CMAKE_SOURCE_DIR}/libs/libwebsockets/include
   ${CMAKE_SOURCE_DIR}/libs/python35/include
+  ${CMAKE_SOURCE_DIR}/libs/rapidjson/include
   ${CMAKE_SOURCE_DIR}/src)
 
 # Link lib files

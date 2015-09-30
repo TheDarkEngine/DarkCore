@@ -1,65 +1,45 @@
 #include <DarkCore.hpp>
 
-HMODULE DarkCore::Module;
+static DarkCore::Container *Core = NULL;
 
-bool DarkCore::Initialize(HINSTANCE module)
-{
-	DarkCore::Module = module;
-
-	DisableThreadLibraryCalls(module);
-
-	//
-	// Find the path of the module
-	//
-
-	char currentPath[MAX_PATH];
-	GetModuleFileName(module, currentPath, MAX_PATH);
-
-	//
-	// Initialize subsystems
-	//
-
-	Logging::Debug::InitDebugLogging(module);
-	Python::Initialize(currentPath);
-	CreateThread(0, 0, WebSockets::Server::Start, 0, 0, 0);
-
-	return true;
-}
-
-//
-// DarkExit should contain any cleanup necessary to safely unload DarkCore 
-//
-bool DarkCore::Finalize()
-{
-	// Cleanup Plugins
-	Python::Finalize();
-
-	// Cleanup Web API
-	WebSockets::Server::Stop();
-
-	// Stop Logging
-	Logging::Debug::ExitDebugLogging();
-
-	return true;
-}
-
-//
-// This temporary hooking that requires an injector.
-// This should be replaced with a better hijack method
-//
 BOOL WINAPI DllMain(HMODULE hMod, long ulReason, void* pvReserved)
 {
 	switch (ulReason)
 	{
-	case DLL_PROCESS_ATTACH:
-		return DarkCore::Initialize(hMod) ? TRUE : FALSE;
-	
-	case DLL_PROCESS_DETACH:
-		return DarkCore::Finalize() ? TRUE : FALSE;
-	
-	case DLL_THREAD_ATTACH:
-	case DLL_THREAD_DETACH:
-		return TRUE;
+		case DLL_PROCESS_ATTACH:
+		{
+			char applicationPathStr[MAX_PATH];
+			GetModuleFileName(hMod, applicationPathStr, MAX_PATH);
+
+			auto applicationPath = std::string(applicationPathStr);
+			auto lastSlashIndex = applicationPath.rfind('\\');
+			auto programDirectory = lastSlashIndex != std::string::npos ? applicationPath.substr(0, lastSlashIndex) : "";
+
+			Core = new DarkCore::Container({
+#ifdef _DEBUG
+				new DarkCore::LogComponent(programDirectory.append("\\DarkCore-Debug.log")),
+#else
+				new DarkCore::LogComponent(programDirectory.append("\\DarkCore.log")),
+#endif
+				new DarkCore::PythonComponent(applicationPath),
+				new DarkCore::ServerComponent()
+			});
+
+			//
+			// TODO: Add other components to the core here.
+			//
+
+			return Core->Initialize() ? TRUE : FALSE;
+		}
+
+		case DLL_PROCESS_DETACH:
+			if (Core != NULL)
+				Core->Finalize();
+			return TRUE;
+
+		case DLL_THREAD_ATTACH:
+		case DLL_THREAD_DETACH:
+			return TRUE;
 	}
 
 	return FALSE;
